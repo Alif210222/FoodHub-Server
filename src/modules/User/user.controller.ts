@@ -28,6 +28,12 @@ const register = async (req:Request,res:Response,next: NextFunction) =>{
 const loginUser = async(req:Request,res:Response)=>{
        try {
         const result = await UserService.loginUser(req.body)
+
+        res.cookie("token", result.token, {
+           secure: false,
+           httpOnly: true,
+           sameSite: "strict", // none / strict / lax
+         });
            
     sendResponse(res, {
       statusCode: 201,
@@ -39,7 +45,7 @@ const loginUser = async(req:Request,res:Response)=>{
         sendResponse(res, {
       statusCode: 500,
       success: false,
-      message: "Something went wrong from login",
+      message: error?.message || "Something went wrong",
       data: null,
     });
        }

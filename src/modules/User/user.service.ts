@@ -1,8 +1,10 @@
 import { Payload } from './../../../generated/prisma/internal/prismaNamespace';
 import { prisma } from "../../lib/prisma";
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
 
 // user create 
+export const secret = "lsdngkdsbfgbkdf"
 
   const createUser = async(Payload:any)=>{
     const hashedPassword = await bcrypt.hash(Payload.password,8)
@@ -22,9 +24,34 @@ import bcrypt from "bcryptjs";
         where:{
             email:payload.email,
         }
+        
      });
+        if (!user) {
+            throw new Error("User not found!");
+          }
+        
+          const ispasswordMatched = await bcrypt.compare(
+            payload.password,
+            user.password,
+          );
+        
+          if (!ispasswordMatched) {
+            throw new Error("Invalid credentials!!");
+          }
 
-     return user;
+          const userData = {
+             id: user.id,
+             name:user.name,
+             role:user.role,
+             status:user.status,
+             email:user.email
+          };
+
+          const token  = jwt.sign(userData,secret,{expiresIn:"4d"})
+
+
+
+     return {user, token};
        
   }
 
