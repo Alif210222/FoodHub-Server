@@ -14,13 +14,51 @@ enum Role {
   
 }
 
-model User {
-    id        String   @id @default(uuid())
-    email     String   @unique
-    password  String
-    name      String?
-    role  Role @default(CUSTOMER)
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+}
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  PREPARING
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  id        String      @id @default(uuid())
+  email     String      @unique
+  password  String
+  name      String?
+  role      Role        @default(CUSTOMER)
+  status    UserStatus  @default(ACTIVE)
+
+
+// Many to many relation 
+  provider  Provider?
+  // orders    Order[]     @relation("CustomerOrders")
+  // reviews   Review[]
+
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+
+//*Provider Model 
+model Provider{
+  id  String  @id @default(uuid())
+  resturentName String
+  cuisineTypes String[]
+  location     String
+  isApproved    Boolean  @default(true)
+
+  userId       String  @unique
+  user          User     @relation(fields: [userId], references: [id])
+
+  // meals         Meal[]
+  // orders        Order[]  @relation("ProviderOrders")
+
+  createdAt     DateTime @default(now())
 }

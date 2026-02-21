@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import userRouter from './modules/User/user.route';
+import routes from './routes';
 
 const app: Application = express();
 
@@ -12,7 +13,7 @@ app.use(cors({
 app.use(express.json());
 
 // application routes
-app.use(userRouter)
+app.use("/api/v1" , routes)
 
 
 
