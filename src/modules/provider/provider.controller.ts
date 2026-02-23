@@ -9,7 +9,7 @@ import { includes } from 'zod';
 
 const createProvider = async(req:Request, res:Response,next: NextFunction)=>{
 
-    console.log("From controler",req.user)
+   // console.log("From controler",req.user)
 
     try {
        const payload = req.body

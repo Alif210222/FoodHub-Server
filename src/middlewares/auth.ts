@@ -21,13 +21,14 @@ const auth = (...roles: UserRole[]) => {
 
       const decoded = jwt.verify(token, secret) as JwtPayload;
 
-      console.log("From Auth DECODED: ",decoded);
+      //console.log("From Auth DECODED: ",decoded);
 
       const userData = await prisma.user.findUnique({
         where: {
           email: decoded.email,
         },
       });
+
       if (!userData) {
         throw new Error("Unauthorized!");
       }

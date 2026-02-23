@@ -7,7 +7,6 @@ const userRouter = Router();
 
 userRouter.post("/register",UserController.register)
 userRouter.post("/login",UserController.loginUser)
-
 userRouter.get("/allUser",UserController.getallUser)
 
 export default userRouter

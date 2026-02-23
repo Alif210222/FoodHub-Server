@@ -38,8 +38,8 @@ model User {
 
 // Many to many relation 
   provider  Provider?
-  // orders    Order[]     @relation("CustomerOrders")
-  // reviews   Review[]
+  orders    Order[]     @relation("CustomerOrders")
+  reviews   Review[]
 
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
@@ -57,8 +57,85 @@ model Provider{
   userId       String    @unique
   user          User     @relation(fields: [userId], references: [id])
 
-  // meals         Meal[]
-  // orders        Order[]  @relation("ProviderOrders")
+  meals         Meal[]
+  orders        Order[]  @relation("ProviderOrders")
 
   createdAt     DateTime @default(now())
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  slug      String   @unique
+  isActive  Boolean  @default(true)
+
+  meals     Meal[]
+
+  createdAt DateTime @default(now())
+}
+
+model Meal {
+  id           String   @id @default(uuid())
+  name         String
+  description  String?
+  price        Float
+  image        String?
+  dietaryTags  String[]
+  isAvailable  Boolean  @default(true)
+
+  providerId   String
+  provider     Provider @relation(fields: [providerId], references: [id])
+
+  categoryId   String?
+  category     Category? @relation(fields: [categoryId], references: [id])
+
+  orderItems   OrderItem[]
+  reviews      Review[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Order {
+  id              String        @id @default(uuid())
+  customerId      String
+  providerId      String
+  totalAmount     Float
+  deliveryAddress String
+  paymentMethod   String        @default("COD")
+  status          OrderStatus   @default(PENDING)
+
+  customer        User          @relation("CustomerOrders", fields: [customerId], references: [id])
+  provider        Provider      @relation("ProviderOrders", fields: [providerId], references: [id])
+
+  items           OrderItem[]
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId  String
+  mealId   String
+  name     String
+  price    Float
+  quantity Int
+
+  order    Order   @relation(fields: [orderId], references: [id])
+  meal     Meal    @relation(fields: [mealId], references: [id])
+}
+
+model Review {
+  id         String   @id @default(uuid())
+  rating     Int
+  comment    String?
+
+  mealId     String
+  customerId String
+
+  meal       Meal     @relation(fields: [mealId], references: [id])
+  customer   User     @relation(fields: [customerId], references: [id])
+
+  createdAt  DateTime @default(now())
 }
