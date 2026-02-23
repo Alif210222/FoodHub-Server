@@ -5,7 +5,7 @@ import { prisma } from "../lib/prisma";
 import { secret } from "../modules/User/user.service";
 
 export enum UserRole {
-  customer = " CUSTOMER",
+  customer = "CUSTOMER",
   provider = "PROVIDER" ,
   admin = "ADMIN"
 }
@@ -21,6 +21,8 @@ const auth = (...roles: UserRole[]) => {
 
       const decoded = jwt.verify(token, secret) as JwtPayload;
 
+      console.log("From Auth DECODED: ",decoded);
+
       const userData = await prisma.user.findUnique({
         where: {
           email: decoded.email,
@@ -35,7 +37,7 @@ const auth = (...roles: UserRole[]) => {
       }
 
       if (roles.length && !roles.includes(decoded.role)) {
-        throw new Error("Unauthorized!!!");
+        throw new Error("Forbidden !!!");
       }
 
       req.user = decoded;

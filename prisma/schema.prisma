@@ -54,7 +54,7 @@ model Provider{
   location     String
   isApproved    Boolean  @default(true)
 
-  userId       String  @unique
+  userId       String    @unique
   user          User     @relation(fields: [userId], references: [id])
 
   // meals         Meal[]

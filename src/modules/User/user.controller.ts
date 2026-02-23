@@ -56,7 +56,7 @@ const getallUser = async(req:Request,res:Response,next: NextFunction) =>{
        try {
         const result = await UserService.getAllUser()
 
-        //  console.log("user created !");
+        // console.log(result);
 
          sendResponse(res, {
              statusCode: 201,

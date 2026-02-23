@@ -9,12 +9,21 @@ import { includes } from 'zod';
 
 const createProvider = async(req:Request, res:Response,next: NextFunction)=>{
 
+    console.log("From controler",req.user)
+
     try {
-        const Payload = req.body; 
+       const payload = req.body
+      const userId = req.user?.id;
+      const userRole = req.user?.role
+      //console.log(userId,userRole);
 
-        const result = await providerService.createProvider(Payload);
+        // console.log("userId:", id);
 
-        console.log("Provider  create done!");
+        const result = await providerService.createProvider({
+            ...payload,userId
+        });
+
+       //console.log("Provider  create done!");
 
          sendResponse(res, {
              statusCode: 201,
