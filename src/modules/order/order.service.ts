@@ -89,19 +89,19 @@ export const OrderService = {
     });
   },
 
-//   // GET SINGLE ORDER (Customer / Provider / Admin)
-//   getOrderById: async (orderId: string) => {
-//     return prisma.order.findUnique({
-//       where: { id: orderId },
-//       include: {
-//         items: {
-//           include: { meal: true },
-//         },
-//         customer: true,
-//         provider: true,
-//       },
-//     });
-//   },
+  // GET SINGLE ORDER (Customer / Provider / Admin)
+  getOrderById: async (orderId: string) => {
+    return prisma.order.findUnique({
+      where: { id: orderId },
+      include: {
+        items: {
+          include: { meal: true },
+        },
+        customer: true,
+        provider: true,
+      },
+    });
+  },
 
 //   // UPDATE ORDER STATUS (Provider)
 //   updateOrderStatus: async (

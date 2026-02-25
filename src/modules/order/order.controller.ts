@@ -67,29 +67,29 @@ export const OrderController = {
     }
   },
 
-//   // GET ORDER DETAILS
-//   getOrderById: async (req: Request, res: Response) => {
-//     try {
-//       const order = await OrderService.getOrderById(req.params.id);
+  // GET ORDER DETAILS
+  getOrderById: async (req: Request, res: Response) => {
+    try {
+      const order = await OrderService.getOrderById(req.params.id);
 
-//       if (!order) {
-//         return res.status(404).json({
-//           success: false,
-//           message: "Order not found",
-//         });
-//       }
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found",
+        });
+      }
 
-//       res.status(200).json({
-//         success: true,
-//         data: order,
-//       });
-//     } catch (error: any) {
-//       res.status(500).json({
-//         success: false,
-//         message: error.message,
-//       });
-//     }
-//   },
+      res.status(200).json({
+        success: true,
+        data: order,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 
 //   // UPDATE ORDER STATUS (Provider)
 //   updateOrderStatus: async (req: Request, res: Response) => {
