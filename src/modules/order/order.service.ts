@@ -60,20 +60,20 @@ export const OrderService = {
   },
 
   // GET ORDERS FOR CUSTOMER
-//   getOrdersByCustomer: async (customerId: string) => {
-//     return prisma.order.findMany({
-//       where: { customerId },
-//       include: {
-//         items: true,
-//         provider: true,
-//       },
-//       orderBy: {
-//         createdAt: "desc",
-//       },
-//     });
-//   },
+  getOrdersByCustomer: async (customerId: string) => {
+    return prisma.order.findMany({
+      where: { customerId },
+      include: {
+        items: true,
+        provider: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  },
 
-//   // GET ORDERS FOR PROVIDER
+   // GET ORDERS FOR PROVIDER
 //   getOrdersByProvider: async (providerId: string) => {
 //     return prisma.order.findMany({
 //       where: { providerId },

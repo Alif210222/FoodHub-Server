@@ -30,23 +30,23 @@ export const OrderController = {
   },
 
   // GET MY ORDERS (Customer)
-//   getMyOrders: async (req: Request, res: Response) => {
-//     try {
-//       const customerId = (req as any).user.id;
+   getMyOrders: async (req: Request, res: Response) => {
+    try {
+      const customerId = (req as any).user.id;
 
-//       const result = await OrderService.getOrdersByCustomer(customerId);
+      const result = await OrderService.getOrdersByCustomer(customerId);
 
-//       res.status(200).json({
-//         success: true,
-//         data: result,
-//       });
-//     } catch (error: any) {
-//       res.status(500).json({
-//         success: false,
-//         message: error.message,
-//       });
-//     }
-//   },
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 
   // GET PROVIDER ORDERS
 //   getProviderOrders: async (req: Request, res: Response) => {
