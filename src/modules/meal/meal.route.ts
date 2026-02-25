@@ -8,11 +8,15 @@ const mealRouter = Router();
 
 // PUBLIC ROUTES
 
-// PROVIDER ROUTES
-mealRouter.post("/",auth(UserRole.provider), mealController.createMeal);
 mealRouter.get("/",mealController.getAllMeal)
 mealRouter.get("/:id",mealController.getSingleMeal)
+
+// PROVIDER ROUTES
+mealRouter.post("/",auth(UserRole.provider), mealController.createMeal);
 mealRouter.patch("/:id",auth(UserRole.provider),mealController.updateMeal)
+mealRouter.delete("/:id",auth(UserRole.provider),mealController.deleteMeal)
+
+
 
 
 export default mealRouter;

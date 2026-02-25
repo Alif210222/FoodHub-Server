@@ -68,7 +68,7 @@ const updateMeal = async( mealId: string,
     data: Partial<CreateMealPayload>) =>{
         //Checking valid provider 
         const meal = await prisma.meal.findFirst({
-        where: { providerId },
+        where: { id: mealId, providerId },
     });
 
     if (!meal) {
@@ -83,9 +83,28 @@ const updateMeal = async( mealId: string,
 }
 
 
+const deleteMeal = async( mealId: string,
+    providerId: string) =>{
+        //Checking valid provider 
+        const meal = await prisma.meal.findFirst({
+        where: { id: mealId, providerId },
+    });
+
+    if (!meal) {
+      throw new Error("Meal not found or unauthorized");
+    }
+
+     return prisma.meal.delete({
+      where:  {id:mealId}
+    });
+
+}
+
+
 export const mealService = {
        createMeal,
        getAllMeal,
        getSingleMeal,
-       updateMeal
+       updateMeal,
+       deleteMeal
 }
