@@ -74,20 +74,20 @@ export const OrderService = {
   },
 
    // GET ORDERS FOR PROVIDER
-//   getOrdersByProvider: async (providerId: string) => {
-//     return prisma.order.findMany({
-//       where: { providerId },
-//       include: {
-//         items: true,
-//         customer: {
-//           select: { id: true, name: true, email: true },
-//         },
-//       },
-//       orderBy: {
-//         createdAt: "desc",
-//       },
-//     });
-//   },
+  getOrdersByProvider: async (providerId: string) => {
+    return prisma.order.findMany({
+      where: { providerId },
+      include: {
+        items: true,
+        customer: {
+          select: { id: true, name: true, email: true },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  },
 
 //   // GET SINGLE ORDER (Customer / Provider / Admin)
 //   getOrderById: async (orderId: string) => {

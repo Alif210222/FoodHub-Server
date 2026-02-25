@@ -49,23 +49,23 @@ export const OrderController = {
   },
 
   // GET PROVIDER ORDERS
-//   getProviderOrders: async (req: Request, res: Response) => {
-//     try {
-//       const providerId = (req as any).user.id;
+  getProviderOrders: async (req: Request, res: Response) => {
+    try {
+      const providerId = (req as any).user.providerId;
 
-//       const result = await OrderService.getOrdersByProvider(providerId);
+      const result = await OrderService.getOrdersByProvider(providerId);
 
-//       res.status(200).json({
-//         success: true,
-//         data: result,
-//       });
-//     } catch (error: any) {
-//       res.status(500).json({
-//         success: false,
-//         message: error.message,
-//       });
-//     }
-//   },
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
 
 //   // GET ORDER DETAILS
 //   getOrderById: async (req: Request, res: Response) => {

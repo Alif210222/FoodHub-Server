@@ -6,5 +6,6 @@ const orderRouter = Router()
 
 orderRouter.post("/",auth(UserRole.customer), OrderController.createOrder)
 orderRouter.get("/",auth(UserRole.customer), OrderController.getMyOrders)
+orderRouter.get("/provider",auth(UserRole.provider), OrderController.getProviderOrders)
 
 export default orderRouter
