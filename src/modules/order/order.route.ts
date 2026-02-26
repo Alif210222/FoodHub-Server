@@ -8,6 +8,7 @@ orderRouter.post("/",auth(UserRole.customer), OrderController.createOrder)
 orderRouter.get("/",auth(UserRole.customer), OrderController.getMyOrders)
 orderRouter.get("/:id",auth(), OrderController.getOrderById)
 orderRouter.get("/provider",auth(UserRole.provider), OrderController.getProviderOrders)
+orderRouter.patch("/:id",auth(UserRole.provider), OrderController.updateOrderStatus)
 
 
 export default orderRouter

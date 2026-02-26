@@ -104,22 +104,22 @@ export const OrderService = {
   },
 
 //   // UPDATE ORDER STATUS (Provider)
-//   updateOrderStatus: async (
-//     orderId: string,
-//     providerId: string,
-//     status: "ACCEPTED" | "PREPARING" | "DELIVERED" | "CANCELLED"
-//   ) => {
-//     const order = await prisma.order.findFirst({
-//       where: { id: orderId, providerId },
-//     });
+  updateOrderStatus: async (
+    orderId: string,
+    providerId: string,
+    status: "ACCEPTED" | "PREPARING" | "DELIVERED" | "CANCELLED"
+  ) => {
+    const order = await prisma.order.findFirst({
+      where: { id: orderId, providerId },
+    });
 
-//     if (!order) {
-//       throw new Error("Order not found or unauthorized");
-//     }
+    if (!order) {
+      throw new Error("Order not found or unauthorized");
+    }
 
-//     return prisma.order.update({
-//       where: { id: orderId },
-//       data: { status },
-//     });
-//   },
+    return prisma.order.update({
+      where: { id: orderId },
+      data: { status },
+    });
+  },
 };

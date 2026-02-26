@@ -22,9 +22,10 @@ export const OrderController = {
         data: result,
       });
     } catch (error: any) {
+       
       res.status(400).json({
         success: false,
-        message: error.message,
+        message:error.message,
       });
     }
   },
@@ -92,27 +93,27 @@ export const OrderController = {
   },
 
 //   // UPDATE ORDER STATUS (Provider)
-//   updateOrderStatus: async (req: Request, res: Response) => {
-//     try {
-//       const providerId = (req as any).user.id;
-//       const { status } = req.body;
+   updateOrderStatus: async (req: Request, res: Response) => {
+    try {
+      const providerId = (req as any).user.providerId;
+      const { status } = req.body;
 
-//       const result = await OrderService.updateOrderStatus(
-//         req.params.id,
-//         providerId,
-//         status
-//       );
+      const result = await OrderService.updateOrderStatus(
+        req.params.id,
+        providerId,
+        status
+      );
 
-//       res.status(200).json({
-//         success: true,
-//         message: "Order status updated",
-//         data: result,
-//       });
-//     } catch (error: any) {
-//       res.status(403).json({
-//         success: false,
-//         message: error.message,
-//       });
-//     }
-//   },
-};
+      res.status(200).json({
+        success: true,
+        message: "Order status updated",
+        data: result,
+      });
+    } catch (error: any) {
+      res.status(403).json({
+        success: false,
+        message: error.message,
+      });
+    }
+   },
+ };
