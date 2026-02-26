@@ -71,23 +71,23 @@ const updateReview = async (
   });
 };
 
-// const deleteReview = async (reviewId: string, customerId: string) => {
-//   const review = await prisma.review.findUnique({
-//     where: { id: reviewId },
-//   });
+ const deleteReview = async (reviewId: string, customerId: string) => {
+  const review = await prisma.review.findUnique({
+    where: { id: reviewId },
+  });
 
-//   if (!review || review.customerId !== customerId) {
-//     throw new Error("Unauthorized or review not found");
-//   }
+  if (!review || review.customerId !== customerId) {
+    throw new Error("Unauthorized or review not found");
+  }
 
-//   return prisma.review.delete({
-//     where: { id: reviewId },
-//   });
-// };
+  return prisma.review.delete({
+    where: { id: reviewId },
+  });
+};
 
 export const reviewService = {
   createReview,
    getReviewsByMeal,
    updateReview,
-//   deleteReview,
+   deleteReview,
 };

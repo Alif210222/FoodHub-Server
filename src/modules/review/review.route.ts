@@ -13,7 +13,7 @@ const reviewRouter = express.Router();
 // Customer only
 reviewRouter.post("/", auth(UserRole.customer), reviewController.createReview);
  reviewRouter.patch("/:id", auth(UserRole.customer), reviewController.updateReview);
-// reviewRouter.delete("/:id", auth(UserRole.customer), reviewController.deleteReview);
+ reviewRouter.delete("/:id", auth(UserRole.customer), reviewController.deleteReview);
 
 
 

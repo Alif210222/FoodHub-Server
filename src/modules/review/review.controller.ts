@@ -60,28 +60,28 @@ const updateReview = async (req: Request, res: Response) => {
   }
 };
 
-// const deleteReview = async (req: Request, res: Response) => {
-//   try {
-//     const customerId = (req as any).user.id;
-//     const { id } = req.params;
+const deleteReview = async (req: Request, res: Response) => {
+  try {
+    const customerId = (req as any).user.id;
+    const { id } = req.params;
 
-//     await ReviewService.deleteReview(id, customerId);
+    await reviewService.deleteReview(id, customerId);
 
-//     res.status(200).json({
-//       success: true,
-//       message: "Review deleted successfully",
-//     });
-//   } catch (error: any) {
-//     res.status(403).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      message: "Review deleted successfully",
+    });
+  } catch (error: any) {
+    res.status(403).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 export const reviewController = {
   createReview,
    getReviewsByMeal,
    updateReview,
-//   deleteReview,
+   deleteReview,
 };
