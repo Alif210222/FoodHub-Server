@@ -2,6 +2,7 @@ import { Payload } from './../../../generated/prisma/internal/prismaNamespace';
 import { prisma } from "../../lib/prisma";
 import bcrypt from "bcryptjs";
 import jwt from 'jsonwebtoken';
+import { Role, UserStatus } from '../../../generated/prisma/enums';
 
 // user create 
 export const secret = "lsdngkdsbfgbkdf"
@@ -62,11 +63,45 @@ export const secret = "lsdngkdsbfgbkdf"
           
   }
 
+interface UpdateUserPayload {
+  role?: Role;
+  status?: UserStatus;
+}
+
+
+const updateUserRoleAndStatus = async (
+  userId: string,
+  payload: UpdateUserPayload
+) => {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return prisma.user.update({
+    where: { id: userId },
+    data: {
+      ...(payload.role && { role: payload.role }),
+      ...(payload.status && { status: payload.status }),
+    },
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      status: true,
+    },
+  });
+};
+
 
 
 
 export const UserService = {
     createUser,
     getAllUser,
-    loginUser
+    loginUser,
+    updateUserRoleAndStatus
     };
