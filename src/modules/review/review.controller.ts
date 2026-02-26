@@ -22,23 +22,23 @@ const createReview = async (req: Request, res: Response) => {
   }
 };
 
-// const getReviewsByMeal = async (req: Request, res: Response) => {
-//   try {
-//     const { mealId } = req.params;
+const getReviewsByMeal = async (req: Request, res: Response) => {
+  try {
+    const { mealId } = req.params;
 
-//     const result = await ReviewService.getReviewsByMeal(mealId);
+    const result = await reviewService.getReviewsByMeal(mealId);
 
-//     res.status(200).json({
-//       success: true,
-//       data: result,
-//     });
-//   } catch (error: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // const updateReview = async (req: Request, res: Response) => {
 //   try {
@@ -81,7 +81,7 @@ const createReview = async (req: Request, res: Response) => {
 
 export const reviewController = {
   createReview,
-//   getReviewsByMeal,
+   getReviewsByMeal,
 //   updateReview,
 //   deleteReview,
 };

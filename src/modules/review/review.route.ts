@@ -8,7 +8,7 @@ const reviewRouter = express.Router();
 
 
 // Public
-// reviewRouter.get("/meal/:mealId", reviewController.getReviewsByMeal);
+ reviewRouter.get("/meal/:mealId", reviewController.getReviewsByMeal);
 
 // Customer only
 reviewRouter.post("/", auth(UserRole.customer), reviewController.createReview);

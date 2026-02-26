@@ -31,22 +31,22 @@ const createReview = async (
   });
 };
 
-// const getReviewsByMeal = async (mealId: string) => {
-//   return prisma.review.findMany({
-//     where: { mealId },
-//     include: {
-//       customer: {
-//         select: {
-//           id: true,
-//           name: true,
-//         },
-//       },
-//     },
-//     orderBy: {
-//       createdAt: "desc",
-//     },
-//   });
-// };
+const getReviewsByMeal = async (mealId: string) => {
+  return prisma.review.findMany({
+    where: { mealId },
+    include: {
+      customer: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+};
 
 // const updateReview = async (
 //   reviewId: string,
@@ -86,7 +86,7 @@ const createReview = async (
 
 export const reviewService = {
   createReview,
-//   getReviewsByMeal,
+   getReviewsByMeal,
 //   updateReview,
 //   deleteReview,
 };
