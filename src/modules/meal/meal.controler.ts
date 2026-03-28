@@ -46,7 +46,7 @@ const getAllMeal = async(req: Request, res: Response) =>{
 const getSingleMeal =async(req: Request, res: Response) =>{
         try {
       const { id } = req.params ;
-      const result = await mealService.getSingleMeal(id);
+      const result = await mealService.getSingleMeal(id as string);
 
       if (!result) {
         return res.status(404).json({
@@ -79,8 +79,8 @@ const updateMeal = async(req: Request, res: Response) =>{
 
 
       const result = await mealService.updateMeal(
-        id,
-        providerId,
+        id as string,
+        providerId as string,
         req.body
       );
 
@@ -108,8 +108,8 @@ const deleteMeal = async(req: Request, res: Response) =>{
     const providerId = provider?.id
 
       const result = await mealService.deleteMeal(
-        id,
-        providerId
+        id as string,
+        providerId as string
       );
 
       res.status(200).json({

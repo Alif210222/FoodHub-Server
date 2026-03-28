@@ -6,10 +6,11 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "npx tsx watch src/server.ts",
-    "build": "tsc",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build": "prisma generate && tsup src/index.ts --format esm --platform node --target node20 --outDir api --external pg-native",
+    "postinstall": "prisma generate"
   },
   "keywords": [
     "express",
@@ -31,6 +32,7 @@
     "http-status": "^2.1.0",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.18.0",
+    "tsup": "^8.5.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {

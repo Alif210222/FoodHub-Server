@@ -26,7 +26,7 @@ const getReviewsByMeal = async (req: Request, res: Response) => {
   try {
     const { mealId } = req.params;
 
-    const result = await reviewService.getReviewsByMeal(mealId);
+    const result = await reviewService.getReviewsByMeal(mealId as string);
 
     res.status(200).json({
       success: true,
@@ -45,7 +45,7 @@ const updateReview = async (req: Request, res: Response) => {
     const customerId = (req as any).user.id;
     const { id } = req.params;
 
-    const result = await reviewService.updateReview(id, customerId, req.body);
+    const result = await reviewService.updateReview(id as string, customerId, req.body);
 
     res.status(200).json({
       success: true,
@@ -65,7 +65,7 @@ const deleteReview = async (req: Request, res: Response) => {
     const customerId = (req as any).user.id;
     const { id } = req.params;
 
-    await reviewService.deleteReview(id, customerId);
+    await reviewService.deleteReview(id as string, customerId);
 
     res.status(200).json({
       success: true,

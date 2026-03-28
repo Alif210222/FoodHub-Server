@@ -2,6 +2,7 @@
 // src/modules/order/order.controller.ts
 import { Request, Response } from "express";
 import { OrderService } from "./order.service";
+import { prisma } from "../../lib/prisma";
 
 export const OrderController = {
   // CREATE ORDER
@@ -49,12 +50,53 @@ export const OrderController = {
     }
   },
 
-  // GET PROVIDER ORDERS
+
+
+  // GET PROVIDER ORDERS controller
   getProviderOrders: async (req: Request, res: Response) => {
     try {
-      const providerId = (req as any).user.providerId;
+      const userId = (req as any).user.id;
+      console.log(userId);
 
-      const result = await OrderService.getOrdersByProvider(providerId);
+       //  Step 1: Find provider using userId
+    const provider = await prisma.provider.findUnique({
+      where: { userId },
+    });
+
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
+    console.log(provider.id);
+
+
+
+    //  Step 2: Use provider.id
+    const result = await OrderService.getOrdersByProvider(
+      provider.id
+    );
+
+      res.status(200).json({
+        success: true,
+        data: result,
+      });
+    } catch (error: any) {
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+    }
+  },
+
+  //get all order for admin
+    getAdminOrders: async (req: Request, res: Response) => {
+    try {
+      
+
+      const result = await OrderService.getOrdersByAdmin();
 
       res.status(200).json({
         success: true,
@@ -71,7 +113,7 @@ export const OrderController = {
   // GET ORDER DETAILS
   getOrderById: async (req: Request, res: Response) => {
     try {
-      const order = await OrderService.getOrderById(req.params.id);
+      const order = await OrderService.getOrderById(req.params.id as string);
 
       if (!order) {
         return res.status(404).json({
@@ -92,14 +134,14 @@ export const OrderController = {
     }
   },
 
-//   // UPDATE ORDER STATUS (Provider)
+   // UPDATE ORDER STATUS (Provider)
    updateOrderStatus: async (req: Request, res: Response) => {
     try {
       const providerId = (req as any).user.providerId;
       const { status } = req.body;
 
       const result = await OrderService.updateOrderStatus(
-        req.params.id,
+        req.params.id as string,
         providerId,
         status
       );
@@ -116,4 +158,35 @@ export const OrderController = {
       });
     }
    },
+
+   // get provider states 
+   getProviderStats: async (req: Request, res: Response) => {
+  try {
+    const userId = (req as any).user.id;
+
+    const provider = await prisma.provider.findFirst({
+      where: { userId },
+    });
+
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
+    const stats = await OrderService.getProviderStats(provider.id);
+
+    res.status(200).json({
+      success: true,
+      data: stats,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
  };

@@ -8,6 +8,7 @@ const userRouter = Router();
 
 userRouter.post("/register",UserController.register)
 userRouter.post("/login",UserController.loginUser)
+userRouter.get("/me",auth(),UserController.getMyProfile)
 userRouter.get("/allUser",UserController.getallUser)
 userRouter.patch("/admin/:id",auth(UserRole.admin), UserController.updateUserRoleAndStatus)
 

@@ -57,6 +57,27 @@ export const secret = "lsdngkdsbfgbkdf"
   }
 
 
+  const getMyProfile = async (email: string) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      status: true,
+      createdAt: true,
+    },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  return user;
+};
+
+
   const getAllUser = async () =>{
         const result = await prisma.user.findMany()
         return result;
@@ -101,6 +122,7 @@ const updateUserRoleAndStatus = async (
 
 export const UserService = {
     createUser,
+    getMyProfile,
     getAllUser,
     loginUser,
     updateUserRoleAndStatus

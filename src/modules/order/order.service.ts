@@ -59,6 +59,15 @@ export const OrderService = {
     });
   },
 
+  getOrdersByAdmin: async () => {
+    return prisma.order.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  },
+
+
   // GET ORDERS FOR CUSTOMER
   getOrdersByCustomer: async (customerId: string) => {
     return prisma.order.findMany({
@@ -73,7 +82,7 @@ export const OrderService = {
     });
   },
 
-   // GET ORDERS FOR PROVIDER
+   // GET ORDERS FOR PROVIDER service 
   getOrdersByProvider: async (providerId: string) => {
     return prisma.order.findMany({
       where: { providerId },
@@ -122,4 +131,39 @@ export const OrderService = {
       data: { status },
     });
   },
+
+// provider states 
+// GET PROVIDER ORDER STATS
+getProviderStats: async (providerId: string) => {
+  const totalOrders = await prisma.order.count({
+    where: { providerId },
+  });
+
+  const pendingOrders = await prisma.order.count({
+    where: { providerId, status: "PENDING" },
+  });
+
+  const deliveredOrders = await prisma.order.count({
+    where: { providerId, status: "DELIVERED" },
+  });
+
+  const revenue = await prisma.order.aggregate({
+    where: {
+      providerId,
+      status: "DELIVERED",
+    },
+    _sum: {
+      totalAmount: true,
+    },
+  });
+
+  return {
+    totalOrders,
+    pendingOrders,
+    deliveredOrders,
+    totalRevenue: revenue._sum.totalAmount || 0,
+  };
+},
+
+
 };
