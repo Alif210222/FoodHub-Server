@@ -58,7 +58,7 @@ app.get('/', (req: Request, res: Response) => {
 
 
 app.use(notFound)
-app.use(errorHandler)
+//app.use(errorHandler)
 
 
 app.all(/.*/, (req, res) => {
